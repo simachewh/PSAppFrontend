@@ -1,0 +1,30 @@
+{
+  "name": "PS Oy Resource Admin",
+  "description": "The admin panel of the Pohjanmaan Siivous Resource manager app.",
+  "main": "server.js",
+  "authors": [
+    "Simachew <simachew.tibebu@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "stats",
+    "history",
+    "angular"
+  ],
+  "homepage": "simachew.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.3.8",
+    "bootstrap": "3.3.6",
+    "angular-route": "1.3.8",
+    "angular-resource": "1.3.8",
+    "angular-animate": "1.3.8"
+  }
+}
