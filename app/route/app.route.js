@@ -20,8 +20,7 @@
             })
             .when("/dashboard", {
                 templateUrl: "../../views/pages/dashboard.html"
-            })
-            .when("/employees", {});
+            });
 
         $locationProvider.html5Mode(true);
     };

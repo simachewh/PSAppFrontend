@@ -21,25 +21,37 @@
         vm.loggedIn = Auth.isLoggedIn();
         vm.doLogin = doLogin;
         vm.doLogout = doLogout;
+        vm.isActive = isActive;
         vm.processing = false;
         vm.error = "";
-        vm.user = {};
+        vm.employee = {};
         vm.loginData = {};
+        vm.logedUser = {};
 
-        console.log("LoginController: vm.loggedIn", vm.loggedIn);
-        // check to see if a user is logged in on every request
+        // check to see if an employee is logged in on every request. Leave this at the top.
         $rootScope.$on('$routeChangeStart', function () {
             vm.loggedIn = Auth.isLoggedIn();
 
-            // get user information on page load
-            Auth.getUser()
-                .then(function (data) {
-                    vm.user = data.data;
+            // get employee information on page load
+            Auth.getEmployee()
+                .success(function (data) {
+                    console.log("Login controller: getting data...", data);
+                    vm.employee = data.data;
+                    vm.loggedUser = data;
                 });
         });
 
         /**
-         * Tries to log user in by calling the login method of Auth service.
+         * Compares the location path to the view view's position.
+         * @param viewLocation the location wheere the view is at.
+         * @returns {boolean}
+         */
+        function isActive(viewLocation) {
+            return viewLocation === $location.path();
+        };
+
+        /**
+         * Tries to log employee in by calling the login method of Auth service.
          */
         function doLogin() {
             vm.processing = true;
@@ -58,11 +70,11 @@
         };
 
         /**
-         * Tries to log user out by calling the logout method of Auth service.
+         * Tries to log employee out by calling the logout method of Auth service.
          */
         function doLogout() {
             Auth.logout();
-            vm.user = "";
+            vm.employee = "";
             $location.path("/login");
         };
 

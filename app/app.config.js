@@ -6,12 +6,10 @@
 
     angular
         .module("psApp")
-        .config(intercept);
+        .config(["$httpProvider", accessTokenInterceptor]);
 
-    function intercept($httpProvider) {
-
+    function accessTokenInterceptor($httpProvider) {
         $httpProvider.interceptors.push("AuthInterceptor");
     };
 
-
-})();
+}());

@@ -1,0 +1,29 @@
+<div>
+    <section>
+        <h1>List of Items</h1>
+        <article>
+            <div class="row">
+                <!-- Master list -->
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="list-group">
+                        <a href="#"
+                           class="list-group-item"
+                           ng-repeat="item in vm.items"
+                           ng-class="{active: $index==vm.selectedIndex}"
+                           ng-click="vm.select(item, $index)"
+                        >
+                            {{item.name}}
+                        </a>
+                    </div>
+                </div>
+                <!-- Detail section-->
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    <div ng-show="vm.selectedItem">
+                        <h4>Item Name</h4>
+                        <h5>{{vm.selectedItem.name}}</h5>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>

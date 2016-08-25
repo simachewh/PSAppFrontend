@@ -7,15 +7,15 @@
     angular
         .module("app.services")
         .factory("Auth", ["$http", "$q", "AuthToken", authManager])
-        .factory("AuthToken", tokenManager)
+        .factory("AuthToken", ["$window", tokenManager])
         /**
-         * This intercetptor factory will be pushed into the app config.
+         * This interceptor factory will be pushed into the app config.
          */
-        .factory("AuthInterceptor", authInterceptor);
+        .factory("AuthInterceptor", ["$q", "$location", "AuthToken", authInterceptor]);
 
     /**
      * Manages user authentication. Logging in, logging out and retrieving
-     * data of the logged in user.
+     * data of the user that's logged in.
      * @param $http injected to communicate with the api.
      * @param $q injected to return promise objects.
      * @param AuthToken to use access token.
@@ -26,7 +26,9 @@
         authFactory.login = login;
         authFactory.logout = logout;
         authFactory.isLoggedIn = isLoggedIn;
-        authFactory.getUser = getUser;
+        authFactory.getEmployee = getEmployee;
+
+        return authFactory;
 
         /**
          *
@@ -62,7 +64,7 @@
          * @returns {boolean}
          */
         function isLoggedIn() {
-            if(AuthToken.getToken()){
+            if (AuthToken.getToken()) {
                 return true;
             } else {
                 return false;
@@ -73,15 +75,14 @@
          * Gets the logged employee from the server, if there is local token.
          * @returns {*}
          */
-        function getUser() {
-            if(AuthToken.getToken()){
-                return $http.get("/me", {cache: true});
+        function getEmployee() {
+            if (AuthToken.getToken()) {
+                return $http.get("http://localhost:1988/api.psdelivery/employees/me", {cache: true});
             } else {
                 return $q.reject({message: "User has No access token"});
             }
         };
 
-        return authFactory;
     };
 
     /**
@@ -106,7 +107,7 @@
          * @param token
          */
         function setToken(token) {
-            if(token){
+            if (token) {
                 $window.localStorage.setItem("token", token);
             } else {
                 $window.localStorage.removeItem("token");
@@ -117,7 +118,7 @@
     };
 
     /**
-     * Configuration to integrate access token into requests 
+     * Configuration to attach access token into requests
      * @param $q used to return promise objects.
      * @param $location used to redirect user to other urls.
      * @param AuthToken token manager, to give access to the user's access token.
@@ -127,6 +128,8 @@
         interceptor.request = onRequest;
         interceptor.responseError = onResponseError;
 
+        return interceptor;
+
         /**
          * Happens on all requests going to the server.
          * @param config
@@ -135,7 +138,7 @@
         function onRequest(config) {
             var token = AuthToken.getToken();
             // if there is token add it to the request header.
-            if(token){
+            if (token) {
                 config.headers["x-access-token"] = token;
             }
 
@@ -151,13 +154,16 @@
 
             // If server returns 403, forbidden request, set the token empty
             //(which logs the user out) and redirect to login page.
-            if(response.status == 403){
+            // todo: better asynchronous implementation.
+            // http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
+            if (response.status == 403) {
                 AuthToken.setToken();
                 $location.path("/login");
             }
             // return the response as a promise.
             return $q.reject(response);
         }
+
     };
 
-})();
+}());

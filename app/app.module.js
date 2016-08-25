@@ -1,8 +1,11 @@
 angular
     .module("app.services", []);
+angular
+    .module("ps.routes", []);
 
 angular.module("psApp", [
     "ngRoute",
-    "app.services"
+    "app.services",
+    "ps.routes"
 ]);
 

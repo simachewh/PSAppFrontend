@@ -1,0 +1,56 @@
+<div>
+    <section>
+        <h1 id="emp-title">Employees</h1>
+        <article>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item"
+                           ng-repeat="employee in vm.employees"
+                           ng-class="{active: $index == vm.selectedIndex}"
+                           ng-click="vm.select(employee, $index)"
+                        >
+                            {{employee.firstName}} {{employee.lastName}}
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8 col-lg-8 col-sm-8">
+                    <div ng-show="vm.selectedEmp">
+                        <h4>First Name</h4>
+                        {{vm.selectedEmp.firstName}}
+                        <h4>Last Name</h4>
+                        {{vm.selectedEmp.lastName}}
+                        <h4>UserName</h4>
+                        {{vm.selectedEmp.userName}}
+                        <h4>Email</h4>
+                        {{vm.selectedEmp.email}}
+                        <h4>Phone</h4>
+                        {{vm.selectedEmp.phone}}
+                        <h4>Address</h4>
+                        {{vm.selectedEmp.address.street}}
+                        {{vm.selectedEmp.address.zipCode}}
+                        {{vm.selectedEmp.address.city}}
+                        {{vm.selectedEmp.address.country}}
+                        <h4>Role</h4>
+                        {{vm.selectedEmp.role}}
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+
+<script>
+
+    /* $("#emp-title").click(function() {
+     alert('list clicked');
+     });*/
+    /*$(".list-group-item").on("click", function() {
+     $this = $(this);
+     alert("a clicked");
+     //$(".list-group a .list-group-item").removeClass("active");
+     $this.addClass("active");
+     });*/
+
+</script>

@@ -1,0 +1,32 @@
+
+body{
+    padding-top: 70px;
+}
+main{
+    display: block;
+    padding-top: 51px;
+}
+
+header figure {
+    margin: 0;
+    padding: 0;
+}
+
+#home-logo {
+    margin-right: 60px;
+}
+
+#landing-logo{
+    margin: 0 auto;
+}
+#meta-nav{
+    margin-right: 25px;
+}
+
+#main-nav{
+    margin-top: 30px;
+}
+
+#content1{
+    margin-top: 70px;
+}
